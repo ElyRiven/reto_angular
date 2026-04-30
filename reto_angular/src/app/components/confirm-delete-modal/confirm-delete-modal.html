@@ -1,0 +1,33 @@
+@if (isOpen()) {
+  <div
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    (click)="onCancel()"
+  >
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <h2 id="modal-title" class="modal-title">
+        ¿Estás seguro de eliminar el producto <strong>{{ productName() }}</strong
+        >?
+      </h2>
+
+      @if (errorMessage()) {
+        <p class="modal-error" role="alert">{{ errorMessage() }}</p>
+      }
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()" [disabled]="isLoading()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-confirm" (click)="onConfirm()" [disabled]="isLoading()">
+          @if (isLoading()) {
+            Eliminando...
+          } @else {
+            Confirmar
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}
