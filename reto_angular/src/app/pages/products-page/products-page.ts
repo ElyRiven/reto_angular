@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PaginationComponent } from '@components/pagination/pagination';
 import { ProductTableComponent } from '@components/product-table/product-table';
 import { SearchBarComponent } from '@components/search-bar/search-bar';
@@ -6,7 +7,7 @@ import { PageSize, ProductsStore } from '@core/products-store';
 
 @Component({
   selector: 'app-products-page',
-  imports: [SearchBarComponent, ProductTableComponent, PaginationComponent],
+  imports: [SearchBarComponent, ProductTableComponent, PaginationComponent, RouterLink],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css',
 })

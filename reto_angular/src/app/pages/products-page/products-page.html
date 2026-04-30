@@ -2,6 +2,7 @@
   <div class="page-content">
     <div class="toolbar">
       <app-search-bar (search)="onSearch($event)" />
+      <a routerLink="/products/new" class="btn-add">Agregar</a>
     </div>
 
     @if (store.loading()) {

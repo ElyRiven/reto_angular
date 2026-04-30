@@ -1,0 +1,148 @@
+<div class="page-container">
+  <div class="page-content">
+    <div class="page-header">
+      <h2 class="page-title">Formulario de Registro de Productos</h2>
+    </div>
+
+    <div class="form-wrapper">
+      <div class="form-grid">
+        <!-- ID -->
+        <div
+          class="form-group"
+          [class.has-error]="store.productForm.id().touched() && store.productForm.id().invalid()"
+        >
+          <label for="product-id">ID <span class="required-mark">*</span></label>
+          <div class="input-wrapper">
+            <input id="product-id" type="text" [formField]="store.productForm.id" />
+            @if (store.productForm.id().pending()) {
+              <span class="input-spinner" aria-label="Verificando ID..."></span>
+            }
+          </div>
+          @if (store.productForm.id().touched() && store.productForm.id().errors().length) {
+            <span class="error-msg" role="alert">{{
+              store.productForm.id().errors()[0].message
+            }}</span>
+          }
+        </div>
+
+        <!-- Nombre -->
+        <div
+          class="form-group"
+          [class.has-error]="
+            store.productForm.name().touched() && store.productForm.name().invalid()
+          "
+        >
+          <label for="product-name">Nombre <span class="required-mark">*</span></label>
+          <input id="product-name" type="text" [formField]="store.productForm.name" />
+          @if (store.productForm.name().touched() && store.productForm.name().errors().length) {
+            <span class="error-msg" role="alert">{{
+              store.productForm.name().errors()[0].message
+            }}</span>
+          }
+        </div>
+
+        <!-- Descripción -->
+        <div
+          class="form-group"
+          [class.has-error]="
+            store.productForm.description().touched() && store.productForm.description().invalid()
+          "
+        >
+          <label for="product-description">Descripción <span class="required-mark">*</span></label>
+          <input id="product-description" type="text" [formField]="store.productForm.description" />
+          @if (
+            store.productForm.description().touched() &&
+            store.productForm.description().errors().length
+          ) {
+            <span class="error-msg" role="alert">{{
+              store.productForm.description().errors()[0].message
+            }}</span>
+          }
+        </div>
+
+        <!-- Logo -->
+        <div
+          class="form-group"
+          [class.has-error]="
+            store.productForm.logo().touched() && store.productForm.logo().invalid()
+          "
+        >
+          <label for="product-logo">Logo <span class="required-mark">*</span></label>
+          <input
+            id="product-logo"
+            type="text"
+            placeholder="https://..."
+            [formField]="store.productForm.logo"
+          />
+          @if (store.productForm.logo().touched() && store.productForm.logo().errors().length) {
+            <span class="error-msg" role="alert">{{
+              store.productForm.logo().errors()[0].message
+            }}</span>
+          }
+        </div>
+
+        <!-- Fecha Liberación -->
+        <div
+          class="form-group"
+          [class.has-error]="
+            store.productForm.date_release().touched() && store.productForm.date_release().invalid()
+          "
+        >
+          <label for="product-release-date"
+            >Fecha Liberación <span class="required-mark">*</span></label
+          >
+          <input
+            id="product-release-date"
+            type="date"
+            [formField]="store.productForm.date_release"
+          />
+          @if (
+            store.productForm.date_release().touched() &&
+            store.productForm.date_release().errors().length
+          ) {
+            <span class="error-msg" role="alert">{{
+              store.productForm.date_release().errors()[0].message
+            }}</span>
+          }
+        </div>
+
+        <!-- Fecha Revisión (calculada automáticamente, solo lectura) -->
+        <div class="form-group">
+          <label for="product-check-date"
+            >Fecha Revisión <span class="required-mark">*</span></label
+          >
+          <input
+            id="product-check-date"
+            type="date"
+            [value]="store.dateRevision()"
+            readonly
+            aria-readonly="true"
+            class="input-readonly"
+          />
+        </div>
+      </div>
+
+      @if (store.submitError()) {
+        <div class="submit-error" role="alert">{{ store.submitError() }}</div>
+      }
+
+      <div class="form-actions">
+        <button type="button" class="btn-reset" (click)="store.resetForm()">Reiniciar</button>
+        <button
+          type="button"
+          class="btn-submit"
+          [disabled]="
+            store.productForm().invalid() || store.productForm().pending() || store.loading()
+          "
+          (click)="store.onSubmit()"
+        >
+          @if (store.loading()) {
+            Enviando...
+          } @else {
+            Enviar
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
