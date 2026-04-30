@@ -56,10 +56,7 @@
           <td>{{ product.date_release | date: 'dd/MM/yyyy' }}</td>
           <td>{{ product.date_revision | date: 'dd/MM/yyyy' }}</td>
           <td class="actions-cell">
-            <app-context-menu
-              [items]="menuItems"
-              (itemSelected)="onMenuAction($event, product.id)"
-            />
+            <app-context-menu [items]="menuItems" (itemSelected)="onMenuAction($event, product)" />
           </td>
         </tr>
       }
