@@ -5,7 +5,9 @@ let PORT = 3002;
 
 // creates express app, registers all controller routes and returns you express app instance
 const app = createExpressServer({
-  //cors: true,
+  cors: {
+    origin: "http://localhost:4200"
+  },
   routePrefix: "/bp", 
 
   controllers: [
