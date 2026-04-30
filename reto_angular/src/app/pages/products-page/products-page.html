@@ -1,0 +1,40 @@
+<div class="page-container">
+  <div class="page-content">
+    <div class="toolbar">
+      <app-search-bar (search)="onSearch($event)" />
+      <a routerLink="/products/new" class="btn-add">Agregar</a>
+    </div>
+
+    @if (store.loading()) {
+      <div class="loading-state" aria-live="polite">
+        <div class="spinner" aria-label="Cargando productos..."></div>
+        <p>Cargando productos...</p>
+      </div>
+    } @else if (store.error()) {
+      <div class="error-state" role="alert">
+        <p>{{ store.error() }}</p>
+        <button class="retry-btn" (click)="store.loadProducts()">Reintentar</button>
+      </div>
+    } @else {
+      <app-product-table
+        [products]="store.filteredProducts()"
+        (editProduct)="onEditProduct($event)"
+        (deleteProduct)="onDeleteProduct($event)"
+      />
+      <app-pagination
+        [totalCount]="store.totalCount()"
+        [pageSize]="store.pageSize()"
+        (pageSizeChange)="onPageSizeChange($event)"
+      />
+    }
+  </div>
+</div>
+
+<app-confirm-delete-modal
+  [isOpen]="showDeleteModal()"
+  [productName]="selectedProduct()?.name ?? ''"
+  [isLoading]="store.deleteLoading()"
+  [errorMessage]="store.deleteError()"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+/>

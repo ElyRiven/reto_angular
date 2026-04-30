@@ -1,0 +1,65 @@
+<div class="table-wrapper">
+  <table class="products-table">
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Nombre del producto</th>
+        <th>
+          <span>Descripción</span>
+          <span
+            class="info-icon"
+            title="Descripción del producto"
+            aria-label="Descripción del producto"
+            tabindex="0"
+            role="tooltip"
+            >ⓘ</span
+          >
+        </th>
+        <th>
+          <span>Fecha de liberación</span>
+          <span
+            class="info-icon"
+            title="Fecha a liberar el producto para los clientes en General"
+            aria-label="Fecha a liberar el producto para los clientes en General"
+            tabindex="0"
+            role="tooltip"
+            >ⓘ</span
+          >
+        </th>
+        <th>
+          <span>Fecha de reestructuración</span>
+          <span
+            class="info-icon"
+            title="Fecha de revisión del producto para cambiar Términos y Condiciones"
+            aria-label="Fecha de revisión del producto para cambiar Términos y Condiciones"
+            tabindex="0"
+            role="tooltip"
+            >ⓘ</span
+          >
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (products().length === 0) {
+        <tr>
+          <td colspan="6" class="empty-state">No se encontraron productos</td>
+        </tr>
+      }
+      @for (product of products(); track product.id) {
+        <tr>
+          <td>
+            <img [src]="product.logo" [alt]="product.name" class="product-logo" />
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.date_release | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ product.date_revision | date: 'dd/MM/yyyy' }}</td>
+          <td class="actions-cell">
+            <app-context-menu [items]="menuItems" (itemSelected)="onMenuAction($event, product)" />
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

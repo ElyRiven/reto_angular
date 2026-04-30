@@ -1,0 +1,34 @@
+.app-header {
+  background-color: #fff;
+  border-bottom: 4px solid #ffdd00;
+  padding: 12px 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  display: flex;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+  color: #1e3466;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e3466;
+  letter-spacing: 0.08em;
+}
