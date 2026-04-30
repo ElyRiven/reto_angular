@@ -19,6 +19,7 @@
       <app-product-table
         [products]="store.filteredProducts()"
         (editProduct)="onEditProduct($event)"
+        (deleteProduct)="onDeleteProduct($event)"
       />
       <app-pagination
         [totalCount]="store.totalCount()"
@@ -28,3 +29,12 @@
     }
   </div>
 </div>
+
+<app-confirm-delete-modal
+  [isOpen]="showDeleteModal()"
+  [productName]="selectedProduct()?.name ?? ''"
+  [isLoading]="store.deleteLoading()"
+  [errorMessage]="store.deleteError()"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+/>
