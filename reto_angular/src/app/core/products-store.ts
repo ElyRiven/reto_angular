@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, of } from 'rxjs';
+import { catchError, EMPTY, of } from 'rxjs';
 import { ProductsApi } from './products-api';
 import { Product } from './product.model';
 
@@ -14,6 +14,9 @@ export class ProductsStore {
   readonly pageSize = signal<PageSize>(5);
   readonly loading = signal<boolean>(false);
   readonly error = signal<string | null>(null);
+  readonly deleteLoading = signal<boolean>(false);
+  readonly deleteError = signal<string | null>(null);
+  readonly deleteSuccess = signal<boolean>(false);
 
   readonly filteredProducts = computed(() => {
     const search = this.searchTerm().toLowerCase().trim();
@@ -51,5 +54,31 @@ export class ProductsStore {
 
   setPageSize(size: PageSize): void {
     this.pageSize.set(size);
+  }
+
+  deleteProduct(id: string): void {
+    this.deleteLoading.set(true);
+    this.deleteError.set(null);
+    this.deleteSuccess.set(false);
+    this.api
+      .deleteProduct(id)
+      .pipe(
+        catchError(() => {
+          this.deleteError.set('No se pudo eliminar el producto. Intenta nuevamente.');
+          this.deleteLoading.set(false);
+          return EMPTY;
+        }),
+      )
+      .subscribe(() => {
+        this.allProducts.update((products) => products.filter((p) => p.id !== id));
+        this.deleteLoading.set(false);
+        this.deleteSuccess.set(true);
+      });
+  }
+
+  resetDeleteState(): void {
+    this.deleteLoading.set(false);
+    this.deleteError.set(null);
+    this.deleteSuccess.set(false);
   }
 }

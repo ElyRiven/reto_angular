@@ -34,4 +34,10 @@ export class ProductsApi {
       .put<Product>(`${this.apiUrl}/bp/products/${encodeURIComponent(id)}`, data)
       .pipe(timeout(5000));
   }
+
+  deleteProduct(id: string): Observable<void> {
+    return this.http
+      .delete<void>(`${this.apiUrl}/bp/products/${encodeURIComponent(id)}`)
+      .pipe(timeout(5000));
+  }
 }
