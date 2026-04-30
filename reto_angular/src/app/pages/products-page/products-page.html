@@ -16,7 +16,10 @@
         <button class="retry-btn" (click)="store.loadProducts()">Reintentar</button>
       </div>
     } @else {
-      <app-product-table [products]="store.filteredProducts()" />
+      <app-product-table
+        [products]="store.filteredProducts()"
+        (editProduct)="onEditProduct($event)"
+      />
       <app-pagination
         [totalCount]="store.totalCount()"
         [pageSize]="store.pageSize()"
