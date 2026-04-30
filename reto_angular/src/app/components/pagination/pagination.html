@@ -1,0 +1,13 @@
+<div class="pagination-bar">
+  <span class="results-count">{{ totalCount() }} Resultados</span>
+  <select
+    class="page-size-select"
+    [value]="pageSize()"
+    (change)="onSizeChange($event)"
+    aria-label="Resultados por página"
+  >
+    @for (option of pageSizeOptions; track option) {
+      <option [value]="option">{{ option }}</option>
+    }
+  </select>
+</div>
