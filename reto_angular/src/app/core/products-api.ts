@@ -3,7 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Product, ProductCreateRequest, ProductsResponse } from './product.model';
+import {
+  Product,
+  ProductCreateRequest,
+  ProductUpdateRequest,
+  ProductsResponse,
+} from './product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsApi {
@@ -21,6 +26,12 @@ export class ProductsApi {
   verifyProductId(id: string): Observable<boolean> {
     return this.http
       .get<boolean>(`${this.apiUrl}/bp/products/verification/${encodeURIComponent(id)}`)
+      .pipe(timeout(5000));
+  }
+
+  updateProduct(id: string, data: ProductUpdateRequest): Observable<Product> {
+    return this.http
+      .put<Product>(`${this.apiUrl}/bp/products/${encodeURIComponent(id)}`, data)
       .pipe(timeout(5000));
   }
 }

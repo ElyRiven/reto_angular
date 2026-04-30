@@ -1,0 +1,152 @@
+<div class="page-container">
+  <div class="page-content">
+    @if (!store.originalValues() && !store.loadError()) {
+      <div class="loading-state" aria-live="polite">
+        <div class="spinner" aria-label="Cargando producto..."></div>
+        <p>Cargando producto...</p>
+      </div>
+    } @else if (store.loadError()) {
+      <div class="error-state" role="alert">
+        <p>{{ store.loadError() }}</p>
+        <div class="error-actions">
+          <button type="button" class="btn-retry" (click)="ngOnInit()">Reintentar</button>
+          <a routerLink="/products" class="btn-back">Volver</a>
+        </div>
+      </div>
+    } @else {
+      <div class="page-header">
+        <h2 class="page-title">Formulario de Actualización de Producto</h2>
+      </div>
+
+      <div class="form-wrapper">
+        <div class="form-grid">
+          <!-- ID (deshabilitado) -->
+          <div class="form-group">
+            <label for="product-id">ID</label>
+            <input
+              id="product-id"
+              type="text"
+              [value]="store.editModel().id"
+              disabled
+              class="input-readonly"
+              aria-disabled="true"
+            />
+          </div>
+
+          <!-- Nombre -->
+          <div
+            class="form-group"
+            [class.has-error]="store.editForm.name().touched() && store.editForm.name().invalid()"
+          >
+            <label for="product-name">Nombre <span class="required-mark">*</span></label>
+            <input id="product-name" type="text" [formField]="store.editForm.name" />
+            @if (store.editForm.name().touched() && store.editForm.name().errors().length) {
+              <span class="error-msg" role="alert">{{
+                store.editForm.name().errors()[0].message
+              }}</span>
+            }
+          </div>
+
+          <!-- Descripción -->
+          <div
+            class="form-group"
+            [class.has-error]="
+              store.editForm.description().touched() && store.editForm.description().invalid()
+            "
+          >
+            <label for="product-description"
+              >Descripción <span class="required-mark">*</span></label
+            >
+            <input id="product-description" type="text" [formField]="store.editForm.description" />
+            @if (
+              store.editForm.description().touched() && store.editForm.description().errors().length
+            ) {
+              <span class="error-msg" role="alert">{{
+                store.editForm.description().errors()[0].message
+              }}</span>
+            }
+          </div>
+
+          <!-- Logo -->
+          <div
+            class="form-group"
+            [class.has-error]="store.editForm.logo().touched() && store.editForm.logo().invalid()"
+          >
+            <label for="product-logo">Logo <span class="required-mark">*</span></label>
+            <input
+              id="product-logo"
+              type="text"
+              placeholder="https://..."
+              [formField]="store.editForm.logo"
+            />
+            @if (store.editForm.logo().touched() && store.editForm.logo().errors().length) {
+              <span class="error-msg" role="alert">{{
+                store.editForm.logo().errors()[0].message
+              }}</span>
+            }
+          </div>
+
+          <!-- Fecha Liberación -->
+          <div
+            class="form-group"
+            [class.has-error]="
+              store.editForm.date_release().touched() && store.editForm.date_release().invalid()
+            "
+          >
+            <label for="product-release-date"
+              >Fecha Liberación <span class="required-mark">*</span></label
+            >
+            <input
+              id="product-release-date"
+              type="date"
+              [formField]="store.editForm.date_release"
+            />
+            @if (
+              store.editForm.date_release().touched() &&
+              store.editForm.date_release().errors().length
+            ) {
+              <span class="error-msg" role="alert">{{
+                store.editForm.date_release().errors()[0].message
+              }}</span>
+            }
+          </div>
+
+          <!-- Fecha Revisión (calculada automáticamente, solo lectura) -->
+          <div class="form-group">
+            <label for="product-check-date"
+              >Fecha Revisión <span class="required-mark">*</span></label
+            >
+            <input
+              id="product-check-date"
+              type="date"
+              [value]="store.dateRevision()"
+              readonly
+              aria-readonly="true"
+              class="input-readonly"
+            />
+          </div>
+        </div>
+
+        @if (store.submitError()) {
+          <div class="submit-error" role="alert">{{ store.submitError() }}</div>
+        }
+
+        <div class="form-actions">
+          <a routerLink="/products" class="btn-back">Volver</a>
+          <button
+            type="button"
+            class="btn-submit"
+            [disabled]="!store.isDirty() || store.editForm().invalid() || store.loading()"
+            (click)="store.onSave()"
+          >
+            @if (store.loading()) {
+              Guardando...
+            } @else {
+              Guardar
+            }
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

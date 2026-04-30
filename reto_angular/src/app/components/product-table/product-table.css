@@ -56,3 +56,9 @@
   padding: 40px;
   font-size: 0.95rem;
 }
+
+.actions-cell {
+  text-align: center;
+  width: 56px;
+  padding: 8px;
+}
