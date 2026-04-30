@@ -37,12 +37,13 @@
             >ⓘ</span
           >
         </th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       @if (products().length === 0) {
         <tr>
-          <td colspan="5" class="empty-state">No se encontraron productos</td>
+          <td colspan="6" class="empty-state">No se encontraron productos</td>
         </tr>
       }
       @for (product of products(); track product.id) {
@@ -54,6 +55,12 @@
           <td>{{ product.description }}</td>
           <td>{{ product.date_release | date: 'dd/MM/yyyy' }}</td>
           <td>{{ product.date_revision | date: 'dd/MM/yyyy' }}</td>
+          <td class="actions-cell">
+            <app-context-menu
+              [items]="menuItems"
+              (itemSelected)="onMenuAction($event, product.id)"
+            />
+          </td>
         </tr>
       }
     </tbody>
